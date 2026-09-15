@@ -59,7 +59,7 @@
   /* ───────────────────────── pantalla de entrada ───────────────────────── */
 
   var puerta;
-  function mostrarPuerta(estado, detalle){
+  function mostrarPuerta(estado, detalle, copiable){
     if (!puerta){
       puerta = document.createElement('div');
       puerta.id = 'brcPuerta';
@@ -81,10 +81,40 @@
         '<button id="brcEntrar" type="button" style="font:inherit;font-size:.95rem;' +
           'font-weight:700;cursor:pointer;padding:.7rem 1.4rem;border-radius:.6rem;' +
           'border:0;background:var(--brand,#DD5F3B);color:#fff">Entrar con Google</button>' +
+        '<div id="brcCopia" hidden style="margin-top:1rem">' +
+          '<code id="brcUid" style="display:block;font-size:.78rem;word-break:break-all;' +
+            'background:var(--gold-soft,#FBEED4);color:var(--ink,#1E3038);' +
+            'padding:.55rem .6rem;border-radius:.45rem;user-select:all"></code>' +
+          '<button id="brcCopiar" type="button" style="font:inherit;font-size:.85rem;' +
+            'font-weight:700;cursor:pointer;margin-top:.6rem;padding:.55rem 1rem;' +
+            'border-radius:.5rem;border:1px solid var(--brand,#DD5F3B);' +
+            'background:transparent;color:var(--brand,#DD5F3B)">Copiar mi identificador</button>' +
+        '</div>' +
       '</div>';
     puerta.querySelector('#brcPuertaTxt').textContent = detalle;
     var btn = puerta.querySelector('#brcEntrar');
     btn.hidden = (estado !== 'pedir');
+
+    var caja = puerta.querySelector('#brcCopia');
+    caja.hidden = !copiable;
+    if (copiable){
+      caja.style.display = 'block';
+      puerta.querySelector('#brcUid').textContent = copiable;
+      var cp = puerta.querySelector('#brcCopiar');
+      cp.addEventListener('click', function(){
+        function ok(){ cp.textContent = '✓ Copiado, mandáselo a Sofi'; }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(copiable).then(ok, seleccionar);
+        } else seleccionar();
+        function seleccionar(){
+          var r = document.createRange();
+          r.selectNodeContents(puerta.querySelector('#brcUid'));
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          try { document.execCommand('copy'); ok(); }
+          catch(e){ cp.textContent = 'Copialo a mano de arriba'; }
+        }
+      });
+    }
     return btn;
   }
 
@@ -218,8 +248,9 @@
       var codigo = err && err.code || '';
       if (codigo === 'permission-denied'){
         mostrarPuerta('esperando',
-          'Entraste bien, pero tu cuenta todavía no está habilitada en la base. ' +
-          'Tu identificador es ' + usuario.uid + ' — hay que agregarlo a las reglas de Firestore.'
+          'Entraste bien, pero todavía falta habilitar tu cuenta. Copiá esto de abajo ' +
+          'y mandáselo a Sofi, que lo agrega y ya podés entrar.',
+          usuario.uid
         );
         señal('Falta habilitar tu cuenta', 'mal');
         console.warn('[sync] UID a agregar en las reglas:', usuario.uid);
