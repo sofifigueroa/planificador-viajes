@@ -71,6 +71,7 @@
       document.body.appendChild(puerta);
     }
     puerta.hidden = false;
+    puerta.style.display = 'flex';
     puerta.innerHTML =
       '<div style="max-width:20rem">' +
         '<div style="font-size:2.6rem;line-height:1;margin-bottom:.8rem">🏔️</div>' +
@@ -88,7 +89,9 @@
   }
 
   function cerrarPuerta(){
-    if (puerta) puerta.hidden = true;
+    /* ojo: puerta lleva display:flex en el atributo style, y eso le gana
+       a [hidden]. Hay que apagarla por display o no se va nunca. */
+    if (puerta){ puerta.hidden = true; puerta.style.display = 'none'; }
   }
 
   function esperarApp(){
@@ -102,9 +105,9 @@
 
   /* la app agregada a la pantalla de inicio en iPhone maneja mal las
      ventanitas emergentes, así que ahí vamos por redirección */
-  function esAppInstalada(){
-    return window.navigator.standalone === true ||
-           window.matchMedia('(display-mode: standalone)').matches;
+  function esIPhone(){
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   }
 
   /* ───────────────────────────── arranque ───────────────────────────── */
@@ -124,9 +127,12 @@
     var proveedor = new authMod.GoogleAuthProvider();
     proveedor.setCustomParameters({prompt: 'select_account'});
 
+    /* que la sesión sobreviva al cierre de la app */
+    authMod.setPersistence(auth, authMod.browserLocalPersistence).catch(function(){});
+
     function entrar(){
       mostrarPuerta('esperando', 'Abriendo Google…');
-      var p = esAppInstalada()
+      var p = esIPhone()
         ? authMod.signInWithRedirect(auth, proveedor)
         : authMod.signInWithPopup(auth, proveedor);
       Promise.resolve(p).catch(function(err){
@@ -140,20 +146,43 @@
       });
     }
 
-    /* si volvemos de una redirección, que no quede la pantalla colgada */
-    authMod.getRedirectResult(auth).catch(function(){});
+    /* Primero resolvemos la vuelta de la redirección y recién después
+       decidimos si mostrar la puerta. Si no, se ve un parpadeo de login
+       aunque la persona haya entrado bien. */
+    mostrarPuerta('esperando', 'Un segundo…');
 
+    /* La vuelta de la redirección se resuelve en paralelo. No colgamos la
+       pantalla esperándola: quien manda es onAuthStateChanged. */
+    authMod.getRedirectResult(auth).catch(function(err){
+      console.warn('[sync] getRedirectResult', err && err.code);
+    });
+
+    var contestó = false;
     authMod.onAuthStateChanged(auth, function(usuario){
-      if (!usuario){
-        mostrarPuerta('pedir',
-          'Entrá con tu cuenta de Google para ver el viaje y que lo que cargues le aparezca al otro.'
-        ).addEventListener('click', entrar);
-        señal('Sin entrar', 'solo');
+      contestó = true;
+      if (usuario){
+        cerrarPuerta();
+        arrancarSync(fs, db, auth, authMod, usuario);
         return;
       }
-      cerrarPuerta();
-      arrancarSync(fs, db, auth, authMod, usuario);
+      mostrarPuerta('pedir',
+        'Entrá con tu cuenta de Google para ver el viaje y que lo que cargues le aparezca al otro.'
+      ).addEventListener('click', entrar);
+      señal('Sin entrar', 'solo');
+    }, function(err){
+      contestó = true;
+      mostrarPuerta('pedir', 'Hubo un problema con el login (' +
+        (err && err.code || 'error') + '). Probá de nuevo.'
+      ).addEventListener('click', entrar);
     });
+
+    /* Red de seguridad: pase lo que pase, nunca quedarse en "Un segundo…" */
+    setTimeout(function(){
+      if (contestó) return;
+      mostrarPuerta('pedir',
+        'Está tardando más de lo normal. Tocá para entrar de nuevo.'
+      ).addEventListener('click', entrar);
+    }, 8000);
 
   }).catch(function(err){
     console.warn('[sync] no pude cargar Firebase', err);

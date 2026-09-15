@@ -437,6 +437,8 @@ h2:first-child{margin-top:.2rem}
 .tabs button.on{color:var(--brand)}
 .tabs button:focus-visible{outline:2px solid var(--brand);outline-offset:-3px}
 
+.seg.note-ask{background:var(--gold-soft);border-radius:.5rem;margin:.4rem .6rem;padding:.6rem .7rem}
+.seg.note-ask svg{color:var(--gold)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -579,36 +581,46 @@ h2:first-child{margin-top:.2rem}
 
   <div class="card">
     <div class="res">
-      <div class="ico g"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 6.5A1.5 1.5 0 0 0 17.5 5h-11a1.5 1.5 0 0 0-1.4 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8l-2.1-5.5zM6.5 16A1.5 1.5 0 1 1 8 14.5 1.5 1.5 0 0 1 6.5 16zm11 0a1.5 1.5 0 1 1 1.5-1.5 1.5 1.5 0 0 1-1.5 1.5zM5 11l1.5-4.5h11L19 11z"/></svg></div>
+      <div class="ico g"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 6.5A1.5 1.5 0 0 0 17.5 5h-11a1.5 1.5 0 0 0-1.4 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8zM6.5 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm11 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5 11l1.5-4.5h11L19 11z"/></svg></div>
       <div class="body">
         <div class="ttl">Auto <span class="pill done">Reservado</span></div>
-        <div class="meta">Chevrolet Prisma o similar, con Cactus. Aeropuerto de Bariloche, ida y vuelta.</div>
+        <div class="meta"><span data-d="autoCorto">Un auto chico</span></div>
       </div>
-      <div class="price"><span data-d="autoArs">$000.000</span><small><span data-d="autoUsd">USD 000,00</span> &middot; 5 días</small></div>
+      <div class="price"><span data-d="autoArs">$000.000</span><small>5 días</small></div>
     </div>
     <div class="seg">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-      <div>Lo retiramos el <b>viernes 23 a las 10:30</b> y lo devolvemos el <b>martes 27 a las 19:00</b>. Manual, 5 plazas, aire, 4 puertas y kilometraje ilimitado.</div>
+      <div>Lo retiramos el <b>viernes 23</b> y lo devolvemos el <b>martes 27</b>. Lo consiguió <span data-d="autoComo">un contacto</span>, así que se arregla directo con ellos.</div>
     </div>
     <div class="seg">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 6h16v2H4z"/></svg>
-      <div>Reserva <b><span data-d="autoRef">000000000</span></b>, a nombre de <span data-d="autoTitular">uno de los dos</span>. La confirmación le llegó al mail.</div>
-    </div>
-    <div class="seg">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <div><b>Cancelación gratis hasta el martes 21 de octubre a las 10:30.</b> Son 48 horas antes de retirarlo. Después ya no se puede.</div>
-    </div>
-    <div class="seg">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-      <div><b>Se paga en dólares.</b> Los <span data-d="autoArs">$000.000</span> están calculados a <span data-d="autoCambio">$0.000</span>. Con tarjeta argentina se paga a dólar tarjeta y son unos <b><span data-d="autoTarjArg">$000.000</span></b>. Con la tarjeta de Estados Unidos quedan en <span data-d="autoTarjUsa">$000.000</span>.</div>
-    </div>
-    <div class="seg">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
-      <div><b>La cobertura básica no cubre gomas, vidrios ni motor</b>, y la franquicia es de $20.000.000. Ojo con el ripio de Colonia Suiza, el Tronador y los Siete Lagos, que es donde se rompen. La cobertura Premium sale $121.262 aparte y se puede sumar hasta el día del retiro.</div>
+      <div><b>Ya está señado</b> con <span data-d="autoSena">$00.000</span>, que es el 30%. Los otros <b><span data-d="autoResto">$000.000</span></b> se pagan al retirarlo, allá.</div>
     </div>
     <div class="seg">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
-      <div>Llevar <b>copias físicas</b> del documento, la licencia y la tarjeta con la que se reservó. El conductor principal es Agustín, así que tienen que estar a su nombre.</div>
+      <div><b>Todo en pesos.</b> Sin dólares, sin el 30% de impuestos y sin recargo por tener menos de 25. Sale <span data-d="autoPorDia">$00.000</span> por día.</div>
+    </div>
+    <div class="seg note-ask">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+      <div><b>Falta preguntarles cuatro cosas:</b> si el seguro cubre gomas y parabrisas por el ripio, de cuánto es la franquicia, si el kilometraje es libre, y si la seña se devuelve. Al ser un arreglo de palabra no hay letra chica donde mirarlo.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="res">
+      <div class="ico d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg></div>
+      <div class="body">
+        <div class="ttl">Cactus <span class="pill todo">Hay que cancelar</span></div>
+        <div class="meta">El auto que habíamos reservado por Booking</div>
+      </div>
+    </div>
+    <div class="seg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <div><b>Cancelación gratis hasta el martes 21 de octubre a las 10:30.</b> Reserva <span data-d="autoRef">000000000</span>. Si se pasa esa fecha se cobra igual.</div>
+    </div>
+    <div class="seg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>
+      <div>Chequear si ya se lo debitaron a Agustín. Si se cobró al reservar, no alcanza con cancelar, hay que pedir el reintegro.</div>
     </div>
   </div>
 
@@ -742,7 +754,7 @@ h2:first-child{margin-top:.2rem}
       <span class="fld">$<input type="number" id="pCasa" min="0" step="5000" aria-label="Precio del alojamiento"></span>
     </div>
     <div class="row">
-      <span class="lbl">Auto <span class="pill done">Reservado</span><small><span data-d="autoCorto">El auto</span>, 5 días. <span data-d="autoUsd">USD 000,00</span>.</small></span>
+      <span class="lbl">Seña del auto <span class="pill done">Pagada</span><small><span data-d="autoCorto">El auto</span>. El 70% que falta se paga allá.</small></span>
       <span class="fld">$<input type="number" id="pAuto" min="0" step="10000" aria-label="Precio del auto"></span>
     </div>
     <div class="row pickrow">
@@ -754,6 +766,9 @@ h2:first-child{margin-top:.2rem}
 
   <h2>Se gasta allá</h2>
   <div class="card">
+    <div class="rowedit">
+      <div class="top"><span class="lbl">Resto del auto<small>El 70% que falta, se paga al retirarlo</small></span><span class="n" id="autoAllaN">$0</span></div>
+    </div>
     <div class="rowedit">
       <div class="top"><span class="lbl">Nafta<small>600 km con el Tronador, unos 45 litros a $2.150</small></span><span class="n">$130.000</span></div>
     </div>
@@ -971,7 +986,7 @@ h2:first-child{margin-top:.2rem}
 
   /* Valores de ejemplo. Los de verdad llegan de la base, nunca viven acá. */
   var b = {outN: 2, outPrice: 75000, marSofi: 0, marAgus: 0, exc: null, extra: [],
-           pVuelo: 0, pCasa: 0, pAuto: 0};
+           pVuelo: 0, pCasa: 0, pAuto: 0, autoAlla: 0};
 
   /* Los textos del viaje: códigos, precios, nombres. También de ejemplo. */
   var V = {};
@@ -1076,13 +1091,14 @@ h2:first-child{margin-top:.2rem}
     var salidas = b.outN * b.outPrice;
     var margen  = b.marSofi + b.marAgus;
     var ENTRADAS = excSum();
-    var est     = NAFTA + SUPER + salidas + ENTRADAS + margen;
+    var est     = NAFTA + SUPER + salidas + ENTRADAS + margen + b.autoAlla;
     var FIJ     = fijos();
     var total   = FIJ + est;
     $('fijTot').textContent   = money(FIJ);
     $('antesTot').textContent = money(FIJ);
     $('homeFij').textContent  = money(FIJ);
     $('excTot').textContent = money(ENTRADAS);
+    $('autoAllaN').textContent = money(b.autoAlla);
 
     $('outN').textContent   = b.outN;
     $('outTot').textContent = money(salidas);
