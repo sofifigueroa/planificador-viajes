@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+
+# Los datos reales del viaje. Nunca se suben.
+*.local.html
+*.local.js

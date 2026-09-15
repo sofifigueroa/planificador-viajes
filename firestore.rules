@@ -1,0 +1,41 @@
+rules_version = '2';
+
+/* Reglas de seguridad de la base.
+   ───────────────────────────────
+   Este repositorio es público, así que los datos del viaje NO viven acá:
+   viven en Firestore, y solo los pueden leer las dos personas del viaje.
+
+   Los identificadores de abajo son de mentira a propósito. Los reales van
+   únicamente en la consola de Firebase, así no quedan expuestos en GitHub.
+
+   Para conseguirlos: que cada uno entre una vez a la app con su Google, y
+   después Firebase → Authentication → Users muestra el UID de cada uno.
+   Esos son los que van acá. */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function somosNosotros() {
+      return request.auth != null
+          && request.auth.uid in [
+               'PEGAR_ACA_EL_UID_DE_SOFI',
+               'PEGAR_ACA_EL_UID_DE_AGUSTIN'
+             ];
+    }
+
+    function tamañoRazonable() {
+      return request.resource.data.keys().hasOnly(['plata', 'lista', 'viaje', 'cuando'])
+          && request.resource.data.get('plata', {}).size() < 40
+          && request.resource.data.get('lista', {}).size() < 300;
+    }
+
+    match /viaje/{documento} {
+      allow read:  if somosNosotros();
+      allow write: if somosNosotros() && tamañoRazonable();
+    }
+
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Bariloche Juntos",
+  "short_name": "Bariloche",
+  "description": "Nuestro viaje a Bariloche, del 23 al 27 de octubre.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF6F1",
+  "theme_color": "#DD5F3B",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
